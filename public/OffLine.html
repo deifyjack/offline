@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <title>Offline</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="javascripts/h5utils.js"></script>
+    <script type="text/javascript" src='javascripts/jquery-1.7.2.min.js'></script>
+    <style>
+        #content{
+            background: #AAAFFF;
+            width:300px;
+        }
+    </style>
+</head>
+<body>
+<div id="content">
+    一个离线网络应用程序就是一个URL的列表——HTML，CSS，JavaScript，图片
+</div>
+<footer> <p>当前状态:<span id="status"></span></p></footer>
+<script type="text/javascript">
+    $(document).ready(function(){
+
+        addEvent(window, 'online', online);
+        addEvent(window, 'offline', online);
+        online({ type: 'ready' });
+
+    });
+    function online(event) {
+        var statusElem  = document.getElementById('status');
+        statusElem.innerHTML = navigator.onLine ? '在线' : '离线';
+        if(navigator.onLine){
+            $.ajax({
+                url:'/content',
+                type:'get',
+                success:function(data){
+                    $("#content").empty();
+                    $("#content").html(data.content);
+                }
+            });
+        }
+    }
+</script>
+</body>
+</html>
