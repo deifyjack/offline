@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html manifest="offline.manifest">
+<html  manifest="offline.manifest">
 <head>
     <title>Offline</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -14,7 +14,10 @@
 </head>
 <body>
 <div id="content">
-    一个离线网络应用程序就是一个URL的列表——HTML，CSS，JavaScript，图片
+    一个离线网络应用程序就是一个URL的列表——HTML，CSS，JavaScript，图片qqqqq得到最新版本缓存列表，并且成功下载资源，更新缓存到最新
+</div>
+<div id="subcontent">
+
 </div>
 <footer> <p>当前状态:<span id="status"></span></p></footer>
 <script type="text/javascript">
@@ -25,20 +28,28 @@
         online({ type: 'ready' });
 
     });
+
     function online(event) {
         var statusElem  = document.getElementById('status');
         statusElem.innerHTML = navigator.onLine ? '在线' : '离线';
         if(navigator.onLine){
+//            var appCache = window.applicationCache;
+//            appCache.update(); // 开始更新
+//            if (appCache.status == window.applicationCache.UPDATEREADY) {
+//                appCache.swapCache();  // 得到最新版本缓存列表，并且成功下载资源，更新缓存到最新
+//            }
             $.ajax({
                 url:'/content',
                 type:'get',
                 success:function(data){
-                    $("#content").empty();
-                    $("#content").html(data.content);
+                    $("#subcontent").empty();
+                    $("#subcontent").html(data.content);
                 }
             });
+
         }
     }
+
 </script>
 </body>
 </html>
