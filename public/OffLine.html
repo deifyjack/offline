@@ -3,7 +3,6 @@
 <head>
     <title>Offline</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <script type="text/javascript" src="javascripts/h5utils.js"></script>
     <script type="text/javascript" src='javascripts/jquery-1.7.2.min.js'></script>
     <style>
         #content{
@@ -22,22 +21,16 @@
 <footer> <p>当前状态:<span id="status"></span></p></footer>
 <script type="text/javascript">
     $(document).ready(function(){
-
-        addEvent(window, 'online', online);
-        addEvent(window, 'offline', online);
+        window.addEventListener('online',online,false);
+        window.addEventListener('offline',online,false);
         online({ type: 'ready' });
-
     });
 
     function online(event) {
         var statusElem  = document.getElementById('status');
         statusElem.innerHTML = navigator.onLine ? '在线' : '离线';
         if(navigator.onLine){
-//            var appCache = window.applicationCache;
-//            appCache.update(); // 开始更新
-//            if (appCache.status == window.applicationCache.UPDATEREADY) {
-//                appCache.swapCache();  // 得到最新版本缓存列表，并且成功下载资源，更新缓存到最新
-//            }
+
             $.ajax({
                 url:'/content',
                 type:'get',
